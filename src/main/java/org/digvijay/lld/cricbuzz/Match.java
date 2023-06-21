@@ -12,8 +12,8 @@ public class Match {
   private int matchNumber;
   private Team team1;
   private Team team2;
-  private int score1;
-  private int score2;
+  private Score score1;
+  private Score score2;
   private List<String> commentary;
   private List<String> ballByBallCommentary;
   private MatchType matchType;
@@ -27,8 +27,8 @@ public class Match {
     this.matchType = matchType;
     this.venue = venue;
     this.seriesName = seriesName;
-    this.score1 = 0;
-    this.score2 = 0;
+    this.score1 = new Score(team1.getTeamName(), 0.0, 0, 0, 0);
+    this.score2 = new Score(team2.getTeamName(),0.0, 0, 0, 0);
     this.commentary = new ArrayList<>();
     this.ballByBallCommentary = new ArrayList<>();
   }
@@ -57,7 +57,7 @@ public class Match {
     return seriesName;
   }
 
-  public int getScore(TeamName teamName) {
+  public Score getScore(TeamName teamName) {
     if (team1.getTeamName() == teamName) {
       return score1;
     } else if (team2.getTeamName() == teamName) {
@@ -67,21 +67,36 @@ public class Match {
     }
   }
 
-  public void updateScore(Team team, int runs, String comment) {
+  public void updateScore(Team team, int runs, String comment, double over, int wicket, int extra) {
     if (team.equals(team1)) {
-      score1 += runs;
+      setOverStats(score1, runs, wicket, extra, over);
     } else if (team.equals(team2)) {
-      score2 += runs;
+      setOverStats(score2, runs, wicket, extra, over);
     } else {
       throw new IllegalArgumentException("Invalid team");
     }
+
     commentary.add(comment);
-    ballByBallCommentary.add(comment + " - " + runs + " runs");
+    ballByBallCommentary.add("[Over: " + over + "] " + comment + " - " + runs +
+                                                    " " +
+                              "runs");
+  }
+
+  public void setOverStats(Score score, int runs, int wicket, int extra,
+   double over) {
+    score.setRun(score.getRun() + runs);
+    if (wicket != 0) {
+      score.setWicket(score.getWicket() + 1);
+    }
+    if (extra !=0 ) {
+      score.setExtra(score.getExtra() + extra);
+    }
+    score.setOver(over);
   }
 
   public String getSummary() {
-    return "Match " + matchNumber + ": " + team1 + ": " + score1 + " vs " + team2 + ": " + score2 +
-            " (" + matchType + ") at " + venue + ", " + seriesName;
+    return "Match " + matchNumber + ": " + score1 + " vs " + score2 + " (" +
+            matchType + ") at " + venue + ", " + seriesName;
   }
 
   public List<String> getCommentary() {

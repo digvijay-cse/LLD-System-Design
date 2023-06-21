@@ -27,14 +27,16 @@ public class Driver {
     cricbuzz.addMatch(match);
 
     // Updating scores and commentary
-    cricbuzz.updateScore(1, team1, 10, "Virat Kohli hits a boundary!");
-    cricbuzz.updateScore(1, team2, 5, "Joe Root takes a quick single.");
+    cricbuzz.updateScore(1, team1, 10, 0.1, "Virat Kohli hits a boundary!", 0
+     , 0);
+    cricbuzz.updateScore(1, team2, 5, 0.2,"Joe Root takes a quick single.", 1
+     , 1);
 
     // Retrieving match summary, commentary, and scores
     String matchSummary = cricbuzz.getMatchSummary(1);
     List<String> commentary = cricbuzz.getMatchCommentary(1);
-    int team1Score = cricbuzz.getScore(1, TeamName.INDIA);
-    int team2Score = cricbuzz.getScore(1, TeamName.ENGLAND);
+    Score team1Score = cricbuzz.getScore(1, TeamName.INDIA);
+    Score team2Score = cricbuzz.getScore(1, TeamName.ENGLAND);
 
     // Printing the results
     System.out.println(matchSummary);
@@ -42,7 +44,7 @@ public class Driver {
     for (String comment : commentary) {
       System.out.println(comment);
     }
-    System.out.println("Team 1 score: " + team1Score);
-    System.out.println("Team 2 score: " + team2Score);
+    System.out.println(team1Score.toString());
+    System.out.println(team2Score.toString());
   }
 }

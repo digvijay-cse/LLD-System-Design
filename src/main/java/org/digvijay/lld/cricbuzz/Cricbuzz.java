@@ -20,10 +20,11 @@ public class Cricbuzz {
     matches.put(match.getMatchNumber(), match);
   }
 
-  public void updateScore(int matchNumber, Team team, int runs, String comment) {
+  public void updateScore(int matchNumber, Team team, int runs,
+   double over, String comment, int wicket, int extra) {
     Match match = matches.get(matchNumber);
     if (match != null) {
-      match.updateScore(team, runs, comment);
+      match.updateScore(team, runs, comment, over, wicket, extra);
     }
   }
 
@@ -43,12 +44,12 @@ public class Cricbuzz {
     return new ArrayList<>();
   }
 
-  public int getScore(int matchNumber, TeamName teamName) {
+  public Score getScore(int matchNumber, TeamName teamName) {
     Match match = matches.get(matchNumber);
     if (match != null) {
       return match.getScore(teamName);
     }
-    return 0;
+    return null;
   }
 }
 
