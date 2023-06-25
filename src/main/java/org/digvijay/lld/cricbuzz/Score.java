@@ -1,5 +1,7 @@
 // Author: Digvijay Pandey (digvijay_cse@icloud.com)
-// Date  : June 2023package org.digvijay.lld.cricbuzz;
+// Date  : June 2023
+package org.digvijay.lld.cricbuzz;
+
 import org.digvijay.lld.cricbuzz.Constants.TeamName;
 
 public class Score {
