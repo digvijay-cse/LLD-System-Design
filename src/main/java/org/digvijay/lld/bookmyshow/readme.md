@@ -101,8 +101,6 @@ Movie movie; // Associated movie
 | `phone`     | VARCHAR  | UNIQUE, NOT NULL               |
 | `user_type` | ENUM     | CHECK (values: 'CUSTOMER', 'ADMIN') |
 
----
-
 ### 2. Customer Table
 
 | Column             | Type     | Constraints                      |
@@ -112,8 +110,6 @@ Movie movie; // Associated movie
 | `favorite_movies`  | TEXT     | // Store as JSON or CSV          |
 | `booking_history`  | TEXT     | // Store as JSON or CSV          |
 
----
-
 ### 3. Admin Table
 
 | Column        | Type     | Constraints                     |
@@ -121,8 +117,6 @@ Movie movie; // Associated movie
 | `user_id`     | BIGINT   | PRIMARY KEY, FK to User         |
 | `role`        | VARCHAR  | NOT NULL                        |
 | `permissions` | TEXT     | // Store as JSON or CSV         |
-
----
 
 ### 4. Movie Table
 
@@ -135,8 +129,6 @@ Movie movie; // Associated movie
 | `rating`     | DECIMAL  |                                |
 | `description`| TEXT     |                                |
 
----
-
 ### 5. Show Table
 
 | Column             | Type     | Constraints                     |
@@ -145,8 +137,6 @@ Movie movie; // Associated movie
 | `movie_id`         | BIGINT   | FK to Movie                     |
 | `show_time`        | TIMESTAMP| NOT NULL                        |
 | `available_seats`  | INT      | NOT NULL                        |
-
----
 
 ### 6. Booking Table
 
@@ -157,8 +147,6 @@ Movie movie; // Associated movie
 | `total_price`     | DECIMAL  | NOT NULL                        |
 | `customer_id`     | BIGINT   | FK to Customer                  |
 | `show_id`         | BIGINT   | FK to Show                      |
-
----
 
 ### 7. Review Table
 
