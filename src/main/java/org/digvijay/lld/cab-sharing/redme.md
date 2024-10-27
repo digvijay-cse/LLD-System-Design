@@ -22,104 +22,109 @@ User
 ├── Payment
 └── Review
 ```
-## Java Classes 
+
+## Java Classes
+
 ```java
 // Base class representing a User
 class User {
-    Long id;
-    String name;
-    String email;
-    String phone;
-    // Constructors, getters, and setters
+  Long id;
+  String name;
+  String email;
+  String phone;
+  // Constructors, getters, and setters
 }
 
 // Rider extends User
 class Rider extends User {
-    String paymentPreferences;
-    List<Location> favoriteLocations;
-    Double rating;
-    // Constructors, getters, and setters
+  String paymentPreferences;
+  List<Location> favoriteLocations;
+  Double rating;
+  // Constructors, getters, and setters
 }
 
 // Driver extends User
 class Driver extends User {
-    String driverLicense;
-    boolean isAvailable;
-    Location currentLocation; // Current location of driver
-    Vehicle vehicle; // Association with a Vehicle class
-    // Constructors, getters, and setters
+  String driverLicense;
+  boolean isAvailable;
+  Location currentLocation; // Current location of driver
+  Vehicle vehicle; // Association with a Vehicle class
+  // Constructors, getters, and setters
 }
 
 // Location representing a geographical coordinate
 class Location {
-    Double latitude;
-    Double longitude;
-    String address; // Optional, if reverse geocoding is needed
-    // Constructors, getters, and setters
+  Double latitude;
+  Double longitude;
+  String address; // Optional, if reverse geocoding is needed
+  // Constructors, getters, and setters
 }
 
 // Vehicle owned by Driver
 class Vehicle {
-    String licensePlate;
-    String make;
-    String model;
-    Driver driver; // Association with Driver
-    // Constructors, getters, and setters
+  String licensePlate;
+  String make;
+  String model;
+  Driver driver; // Association with Driver
+  // Constructors, getters, and setters
 }
 
 // Enum representing the status of a trip
 enum TripStatus {
-    REQUESTED,
-    MATCHED,
-    ONGOING,
-    COMPLETED,
-    CANCELED
+  REQUESTED,
+  MATCHED,
+  ONGOING,
+  COMPLETED,
+  CANCELED
 }
 
 // Trip details
 class Trip {
-    Long id;
-    Rider rider;
-    Driver driver;
-    Location startLocation;
-    Location endLocation;
-    TripStatus tripStatus;
-    Payment payment;
-    Review review; // Optional, for rating
-    // Constructors, getters, and setters
+  Long id;
+  Rider rider;
+  Driver driver;
+  Location startLocation;
+  Location endLocation;
+  TripStatus tripStatus;
+  Payment payment;
+  Review review; // Optional, for rating
+  // Constructors, getters, and setters
 }
 
 // Payment details for a trip
 class Payment {
-    Long id;
-    Double amount;
-    String paymentMethod; // e.g., credit card, cash
-    String status; // e.g., PAID, PENDING
-    Trip trip; // Association with Trip
-    // Constructors, getters, and setters
+  Long id;
+  Double amount;
+  String paymentMethod; // e.g., credit card, cash
+  String status; // e.g., PAID, PENDING
+  Trip trip; // Association with Trip
+  // Constructors, getters, and setters
 }
 
 // Review or rating for a trip
 class Review {
-    Long id;
-    int rating; // out of 5
-    String feedback;
-    Trip trip; // Association with Trip
-    // Constructors, getters, and setters
+  Long id;
+  int rating; // out of 5
+  String feedback;
+  Trip trip; // Association with Trip
+  // Constructors, getters, and setters
 }
 
 // Match class to match Riders with Drivers based on criteria
 class Match {
-    Rider rider;
-    List<Driver> availableDrivers;
-    // Method to find and match the nearest driver
-    Driver findMatch() {
-        // Matching logic
-        return null; // Placeholder return
-    }
+  Rider rider;
+  List<Driver> availableDrivers;
+
+  // Method to find and match the nearest driver
+  Driver findMatch() {
+    // Matching logic
+    return null; // Placeholder return
+  }
 }
 ```
+
 ## Database Tables
+
 ### 1. User Table
 
 | Column       | Type     | Constraints                               |
