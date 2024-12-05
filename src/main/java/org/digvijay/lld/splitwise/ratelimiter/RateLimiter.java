@@ -2,7 +2,7 @@ package org.digvijay.lld;
 
 import java.util.*;
 
-public class RaterLimiter {
+public class RateLimiter {
   int timeWindow;
   int maxRequests;
   HashMap<Integer, LinkedList<Integer>> clientRequests;
