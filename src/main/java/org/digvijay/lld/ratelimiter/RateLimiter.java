@@ -3,18 +3,18 @@ package org.digvijay.lld;
 import java.util.LinkedList;
 import java.util.HashMap;
 
-public class RaterLimiter {
-  int timeWindow;
-  int maxRequestsAllowedInTimeWindow;
-  HashMap<Integer, LinkedList<Integer>> clientRequests;
+public class RateLimiter {
+  private int timeWindow;
+  private int maxRequestsAllowedInTimeWindow;
+  private HashMap<Integer, LinkedList<Integer>> clientRequests;
 
-  RaterLimiter (int timeWindow, int maxRequestsAllowedInTimeWindow) {
+  RateLimiter (int timeWindow, int maxRequestsAllowedInTimeWindow) {
     this.timeWindow = timeWindow;
     this.maxRequestsAllowedInTimeWindow = maxRequestsAllowedInTimeWindow;
     clientRequests = new HashMap<>();
   }
 
-  public int isAllowed(int clientId, int requestTimestamp) {
+  public int isRequestAllowed(int clientId, int requestTimestamp) {
     clientRequests.putIfAbsent(clientId, new LinkedList<>());
     LinkedList<Integer> linkedList = clientRequests.get(clientId);
 
@@ -31,13 +31,13 @@ public class RaterLimiter {
   }
 
   public static void main(String[] args) {
-    RaterLimiter raterLimiter = new RaterLimiter(2, 1);
-    System.out.println(raterLimiter.isAllowed(1,1));
-    System.out.println(raterLimiter.isAllowed(1,2));
-    System.out.println(raterLimiter.isAllowed(1,3));
-    System.out.println(raterLimiter.isAllowed(1,4));
-    System.out.println(raterLimiter.isAllowed(1,5));
-    System.out.println(raterLimiter.isAllowed(1,6));
-    System.out.println(raterLimiter.isAllowed(1,7));
+    RateLimiter rateLimiter = new RateLimiter(2, 1);
+    System.out.println(rateLimiter.isRequestAllowed(1,1));
+    System.out.println(rateLimiter.isRequestAllowed(1,2));
+    System.out.println(rateLimiter.isRequestAllowed(1,3));
+    System.out.println(rateLimiter.isRequestAllowed(1,4));
+    System.out.println(rateLimiter.isRequestAllowed(1,5));
+    System.out.println(rateLimiter.isRequestAllowed(1,6));
+    System.out.println(rateLimiter.isRequestAllowed(1,7));
   }
 }
