@@ -1,28 +1,29 @@
 package org.digvijay.lld;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.HashMap;
 
-public class RateLimiter {
+public class RaterLimiter {
   int timeWindow;
-  int maxRequests;
+  int maxRequestsAllowedInTimeWindow;
   HashMap<Integer, LinkedList<Integer>> clientRequests;
 
-  RaterLimiter (int timeWindow, int maxRequests) {
+  RaterLimiter (int timeWindow, int maxRequestsAllowedInTimeWindow) {
     this.timeWindow = timeWindow;
-    this.maxRequests = maxRequests;
+    this.maxRequestsAllowedInTimeWindow = maxRequestsAllowedInTimeWindow;
     clientRequests = new HashMap<>();
   }
 
-  public int isAllowed(int clientId, int timestamp) {
+  public int isAllowed(int clientId, int requestTimestamp) {
     clientRequests.putIfAbsent(clientId, new LinkedList<>());
     LinkedList<Integer> linkedList = clientRequests.get(clientId);
 
-    while(!linkedList.isEmpty() && linkedList.peek() <= timestamp - timeWindow) {
+    while(!linkedList.isEmpty() && linkedList.peek() <= requestTimestamp - timeWindow) {
       linkedList.poll();
     }
 
-    if (linkedList.size() < maxRequests) {
-      linkedList.offer(timestamp);
+    if (linkedList.size() < maxRequestsAllowedInTimeWindow) {
+      linkedList.offer(requestTimestamp);
       return 200;
     } else {
       return 429;
