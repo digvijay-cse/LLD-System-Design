@@ -16,14 +16,14 @@ public class RateLimiter {
 
   public int isRequestAllowed(int clientId, int requestTimestamp) {
     clientRequests.putIfAbsent(clientId, new LinkedList<>());
-    LinkedList<Integer> linkedList = clientRequests.get(clientId);
+    LinkedList<Integer> requests = clientRequests.get(clientId);
 
-    while(!linkedList.isEmpty() && linkedList.peek() <= requestTimestamp - timeWindow) {
-      linkedList.poll();
+    while(!requests.isEmpty() && requests.peek() <= requestTimestamp - timeWindow) {
+      requests.poll();
     }
 
-    if (linkedList.size() < maxRequestsAllowedInTimeWindow) {
-      linkedList.offer(requestTimestamp);
+    if (requests.size() < maxRequestsAllowedInTimeWindow) {
+      requests.offer(requestTimestamp);
       return 200;
     } else {
       return 429;
@@ -31,13 +31,14 @@ public class RateLimiter {
   }
 
   public static void main(String[] args) {
-    RateLimiter rateLimiter = new RateLimiter(2, 1);
-    System.out.println(rateLimiter.isRequestAllowed(1,1));
-    System.out.println(rateLimiter.isRequestAllowed(1,2));
-    System.out.println(rateLimiter.isRequestAllowed(1,3));
-    System.out.println(rateLimiter.isRequestAllowed(1,4));
-    System.out.println(rateLimiter.isRequestAllowed(1,5));
-    System.out.println(rateLimiter.isRequestAllowed(1,6));
-    System.out.println(rateLimiter.isRequestAllowed(1,7));
+    // 1 requests in every 2 seconds.
+    RateLimiter rateLimiterTier = new RateLimiter(2, 1);
+    System.out.println(rateLimiterTier.isRequestAllowed(1,1)); // 200
+    System.out.println(rateLimiterTier.isRequestAllowed(1,2)); // 429
+    System.out.println(rateLimiterTier.isRequestAllowed(1,3)); // 200
+    System.out.println(rateLimiterTier.isRequestAllowed(2,4)); // 200
+    System.out.println(rateLimiterTier.isRequestAllowed(2,5)); // 429
+    System.out.println(rateLimiterTier.isRequestAllowed(2,6)); // 200
+    System.out.println(rateLimiterTier.isRequestAllowed(3,7)); // 200
   }
 }
